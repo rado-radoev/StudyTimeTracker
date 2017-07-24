@@ -35,13 +35,14 @@ public class MainWindow extends JFrame {
 		super();
 		mainLayout = new BorderLayout();
 		
+		// Create current activity JPanel that will hold the 
+		// CurrentActivity Label and Radio buttons
 		currentActivitiPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		currentActivityLabel = new JLabel("Current Activity");
 		currentActivitiPanel.add(currentActivityLabel);
 		
-		
-		
-		
+		// Create the Current Activity Radio Button group and
+		// Add activity radio buttons
 		currentActivityGroup = new ButtonGroup();
 		studyRadioButton = new JRadioButton("Study", true);
 		currentActivityGroup.add(studyRadioButton);
@@ -50,6 +51,7 @@ public class MainWindow extends JFrame {
 		projectsRadioButton = new JRadioButton("Projects", false);
 		currentActivityGroup.add(projectsRadioButton);
 		
+		// Add the radio buttons to the JPanel
 		currentActivitiPanel.add(studyRadioButton);
 		currentActivitiPanel.add(exercicesRadioButton);
 		currentActivitiPanel.add(projectsRadioButton);
