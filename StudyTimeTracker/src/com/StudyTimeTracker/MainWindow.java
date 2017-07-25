@@ -27,6 +27,7 @@ public class MainWindow extends JFrame {
 	private JLabel totalStudyTimeTodayLabel;
 	private JPanel studyTimeJPanel1;
 	private JPanel studyTimeJPanel2;
+	private JPanel studyTimeJPanelEmptySpace;
 	private final BorderLayout mainLayout = new BorderLayout();
 	private JPanel currentActivityPanel1;
 	private JPanel currentActivityPanel2;
@@ -52,7 +53,7 @@ public class MainWindow extends JFrame {
 		
 		// Create current activity JPanel that will hold the 
 		// CurrentActivity Label
-		currentActivityPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		currentActivityPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
 		
 		// Create and add the current activity label and add to its own panel
 		currentActivityLabel = new JLabel("Current Activity");
@@ -60,7 +61,7 @@ public class MainWindow extends JFrame {
 		
 		// Create the Current Activity Radio Button group and
 		// Add activity radio buttons to their own JPanel
-		currentActivityPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		currentActivityPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
 		
 		currentActivityGroup = new ButtonGroup();
 		
@@ -86,22 +87,24 @@ public class MainWindow extends JFrame {
 
 	private void TimeLabelsSection() {
 		currentDateTimeLabel = new JLabel("Current time:");
-		currentDateTimeJPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		currentDateTimeJPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		currentDateTimeJPanel1.add(currentDateTimeLabel);
 		
 		timeStartedStudyingLabel = new JLabel("Time started studying:");
 		timeStoppedStudyingLabel = new JLabel("Time stopped studying:");
 		totalStudyTimeLabel = new JLabel("Total study time:");
 		totalStudyTimeTodayLabel = new JLabel("Total study time total:");
-		studyTimeJPanel1 = new JPanel(new GridLayout(2, 2, 5, 5));
+		studyTimeJPanel1 = new JPanel(new GridLayout(2, 2, 100, 10));
 		
 		studyTimeJPanel1.add(timeStartedStudyingLabel);
 		studyTimeJPanel1.add(timeStoppedStudyingLabel);
 		studyTimeJPanel1.add(totalStudyTimeLabel);
 		studyTimeJPanel1.add(totalStudyTimeTodayLabel);
 
-		studyTimeJPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		studyTimeJPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 50));
+		studyTimeJPanelEmptySpace = new JPanel(new FlowLayout(FlowLayout.CENTER, 20,0));
 		studyTimeJPanel2.add(currentDateTimeJPanel1);
+		studyTimeJPanel2.add(studyTimeJPanelEmptySpace);
 		studyTimeJPanel2.add(studyTimeJPanel1);
 			
 		add(studyTimeJPanel2, mainLayout.CENTER);
