@@ -13,4 +13,4 @@ Work log:
 - **7/26/2017** - Interface is OK for now. I have the main layout. Code is refactored, still a lot of work to do, but looks OK for now.
 Next steps are to put some code behind the interface. 
 
-Interface iteration 1: ![Alt text](Interface sketches/Interface_Iteration_1.JPG?raw=true "Iterface iteration 1")
+![interface_iteration_1](https://user-images.githubusercontent.com/16504625/28647930-117d8152-721f-11e7-8898-c8d708ca7a97.JPG)
