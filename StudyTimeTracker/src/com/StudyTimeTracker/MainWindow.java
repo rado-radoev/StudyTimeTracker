@@ -10,11 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
 
 public class MainWindow extends JFrame {
 	
@@ -36,14 +36,20 @@ public class MainWindow extends JFrame {
 	private JRadioButton studyRadioButton;
 	private JRadioButton exercicesRadioButton;
 	private JRadioButton projectsRadioButton;
-	
+	private JComboBox<String> studySubjectsDropDown;
+	private JPanel studySubjectsPanel1;
+	private JScrollPane studySubjectsScrollPane;
+	private JLabel studySubjectLabel;
+	private JPanel mainCenterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 	public MainWindow() {
 		super();
 
 		ActivitySection();
+		add(currentActivityPanel3, mainLayout.NORTH);
 		TimeLabelsSection();
-		
+		StudySubjectSelection();
+		add(mainCenterPanel, mainLayout.CENTER);
 	}
 
 	private void ActivitySection() {
@@ -82,7 +88,7 @@ public class MainWindow extends JFrame {
 		currentActivityPanel3.add(currentActivityPanel2);
 		
 		// Add Activities JPanel to frame
-		add(currentActivityPanel3, mainLayout.NORTH);	// Add the activity panel to the north border (top)
+//		add(currentActivityPanel3, mainLayout.NORTH);	// Add the activity panel to the north border (top)
 	}
 
 	private void TimeLabelsSection() {
@@ -107,11 +113,28 @@ public class MainWindow extends JFrame {
 		studyTimeJPanel2.add(studyTimeJPanelEmptySpace);
 		studyTimeJPanel2.add(studyTimeJPanel1);
 			
-		add(studyTimeJPanel2, mainLayout.CENTER);
-
+		mainCenterPanel.add(studyTimeJPanel2);
 				
 	}
 
+	private void StudySubjectSelection() {
+		String[] studySubjectsList = {"Java", "HTML & JavaScript", "Python"};
+		studySubjectLabel = new JLabel("Select type of study:");
+		studySubjectsPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 20));
+		
+		studySubjectsDropDown = new JComboBox<String>(studySubjectsList);
+		studySubjectsDropDown.setSelectedIndex(0);
+		studySubjectsScrollPane = new JScrollPane(studySubjectsDropDown);
+
+
+		
+		studySubjectsPanel1.add(studySubjectLabel);
+		studySubjectsPanel1.add(studySubjectsScrollPane);
+		
+		
+		mainCenterPanel.add(studySubjectsPanel1);
+	}
+	
 }
 
 
