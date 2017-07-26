@@ -28,7 +28,6 @@ public class MainWindow extends JFrame {
 	private JPanel studyTimeJPanel1;
 	private JPanel studyTimeJPanel2;
 	private JPanel studyTimeJPanelEmptySpace;
-	private final BorderLayout mainLayout = new BorderLayout();
 	private JPanel currentActivityPanel1;
 	private JPanel currentActivityPanel2;
 	private JPanel currentActivityPanel3;
@@ -40,19 +39,32 @@ public class MainWindow extends JFrame {
 	private JPanel studySubjectsPanel1;
 	private JScrollPane studySubjectsScrollPane;
 	private JLabel studySubjectLabel;
-	private JPanel mainCenterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-
+	private JButton startStudy;
+	private JButton pauseStudy;
+	private JButton stopStudy;
+	private JButton displayStats;
+	private JButton gitHubUpload;
+	private JPanel buttonsPanel1;
+	private JPanel buttonsPanel2;
+			
+	private final JPanel mainCenterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+	private final JPanel bottomPanel = new JPanel(new GridLayout(2, 1));
+	private final BorderLayout mainLayout = new BorderLayout();
+	
+	
 	public MainWindow() {
 		super();
 
-		ActivitySection();
+		activitySection();
 		add(currentActivityPanel3, mainLayout.NORTH);
-		TimeLabelsSection();
-		StudySubjectSelection();
+		timeLabelsSection();
+		studySubjectSection();
 		add(mainCenterPanel, mainLayout.CENTER);
+		buttonSection();
+		add(bottomPanel, mainLayout.SOUTH);
 	}
 
-	private void ActivitySection() {
+	private void activitySection() {
 		
 		// Main JPanel that will hold the activity label and radio buttons
 		currentActivityPanel3 = new JPanel(new GridLayout(2, 1, 0, 0));
@@ -91,7 +103,7 @@ public class MainWindow extends JFrame {
 //		add(currentActivityPanel3, mainLayout.NORTH);	// Add the activity panel to the north border (top)
 	}
 
-	private void TimeLabelsSection() {
+	private void timeLabelsSection() {
 		currentDateTimeLabel = new JLabel("Current time:");
 		currentDateTimeJPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		currentDateTimeJPanel1.add(currentDateTimeLabel);
@@ -117,24 +129,55 @@ public class MainWindow extends JFrame {
 				
 	}
 
-	private void StudySubjectSelection() {
+	private void studySubjectSection() {
+		// Create a list of study objects. TO DO: later on they will be read from a file
 		String[] studySubjectsList = {"Java", "HTML & JavaScript", "Python"};
+		
+		// Label to select the study subject
 		studySubjectLabel = new JLabel("Select type of study:");
+		
+		// Panel that holds the label and the dropdown box
 		studySubjectsPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 20));
 		
+		// The combo box containing the subjects. Java or Index 0 is the default one
+		// Add it to scrollable box
 		studySubjectsDropDown = new JComboBox<String>(studySubjectsList);
 		studySubjectsDropDown.setSelectedIndex(0);
 		studySubjectsScrollPane = new JScrollPane(studySubjectsDropDown);
 
-
-		
+		// Add both items to the panel
 		studySubjectsPanel1.add(studySubjectLabel);
 		studySubjectsPanel1.add(studySubjectsScrollPane);
 		
-		
+		// Add the panel to the main panel
 		mainCenterPanel.add(studySubjectsPanel1);
 	}
 	
+	private void buttonSection() {
+		// create buttons
+		startStudy = new JButton ("Start");
+		pauseStudy = new JButton ("Pause");
+		stopStudy = new JButton ("Stop");
+		displayStats = new JButton ("Display Stats");
+		gitHubUpload = new JButton ("GitHub upload ...");
+		
+		// Create two panel holding the button
+		// Start, pause, stop, display stats will be on one line
+		// githbu upload is on a second line
+		
+		buttonsPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0));
+		buttonsPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+		
+		buttonsPanel1.add(startStudy);
+		buttonsPanel1.add(pauseStudy);
+		buttonsPanel1.add(stopStudy);
+		buttonsPanel1.add(displayStats);
+		
+		buttonsPanel2.add(gitHubUpload);
+		
+		bottomPanel.add(buttonsPanel1);
+		bottomPanel.add(buttonsPanel2);
+	}
 }
 
 
