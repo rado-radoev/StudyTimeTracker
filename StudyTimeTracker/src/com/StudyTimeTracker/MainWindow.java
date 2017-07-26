@@ -24,7 +24,6 @@ public class MainWindow extends JFrame {
 	private JPanel currentActivityLabelPanel;
 	private JPanel currentActivityRadioButtonsPanel;
 	
-	
 	private JLabel[] timeLabels;
 	private String[] timeLabelsNames = {"Current time:", "Time started studying:" , "Time stopped studying:", 
 			"Today study time:", "Total study time total:"};
@@ -33,18 +32,14 @@ public class MainWindow extends JFrame {
 	private JPanel studyTimeJPanel;
 	private JPanel studyTimeJPanelEmptySpace;
 	
-	
-
 	private JComboBox<String> studySubjectsDropDown;
 	private JPanel studySubjectsPanel1;
 	private JScrollPane studySubjectsScrollPane;
+	private String[] studySubjectsList = {"Java", "HTML & JavaScript", "Python"};
 
 	private JLabel studySubjectLabel;
-	private JButton startStudy;
-	private JButton pauseStudy;
-	private JButton stopStudy;
-	private JButton displayStats;
-	private JButton gitHubUpload;
+	private JButton[] buttons;
+	private String[] buttonNames = {"Start", "Pause", "Stop", "Display Stats", "GitHub upload ..."};
 	private JPanel buttonsPanel1;
 	private JPanel buttonsPanel2;
 			
@@ -127,14 +122,11 @@ public class MainWindow extends JFrame {
 	}
 
 	private void studySubjectSection() {
-		// Create a list of study objects. TO DO: later on they will be read from a file
-		String[] studySubjectsList = {"Java", "HTML & JavaScript", "Python"};
+		// Panel that holds the label and the dropdown box
+		studySubjectsPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 20));
 		
 		// Label to select the study subject
 		studySubjectLabel = new JLabel("Select type of study:");
-		
-		// Panel that holds the label and the dropdown box
-		studySubjectsPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 20));
 		
 		// The combo box containing the subjects. Java or Index 0 is the default one
 		// Add it to scrollable box
@@ -151,13 +143,6 @@ public class MainWindow extends JFrame {
 	}
 	
 	private void buttonSection() {
-		// create buttons
-		startStudy = new JButton ("Start");
-		pauseStudy = new JButton ("Pause");
-		stopStudy = new JButton ("Stop");
-		displayStats = new JButton ("Display Stats");
-		gitHubUpload = new JButton ("GitHub upload ...");
-		
 		// Create two panel holding the button
 		// Start, pause, stop, display stats will be on one line
 		// github upload is on a second line
@@ -165,13 +150,19 @@ public class MainWindow extends JFrame {
 		buttonsPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0));
 		buttonsPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
 		
-		buttonsPanel1.add(startStudy);
-		buttonsPanel1.add(pauseStudy);
-		buttonsPanel1.add(stopStudy);
-		buttonsPanel1.add(displayStats);
+		// create buttons
+		buttons =  new JButton[buttonNames.length];
+		for (int i = 0; i < buttons.length;i++) {
+			buttons[i] = new JButton(buttonNames[i]);
+			if (!buttonNames[i].equals("GitHub upload ...")) {
+				buttonsPanel1.add(buttons[i]);
+			}
+			else {
+				buttonsPanel2.add(buttons[i]);
+			}
+		}
 		
-		buttonsPanel2.add(gitHubUpload);
-		
+		// Add the two panels to the bottom panel on the main window
 		bottomPanel.add(buttonsPanel1);
 		bottomPanel.add(buttonsPanel2);
 	}
