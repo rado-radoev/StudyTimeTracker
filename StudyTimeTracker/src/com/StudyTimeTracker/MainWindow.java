@@ -2,7 +2,6 @@ package com.StudyTimeTracker;
 
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
-import java.awt.GradientPaint;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -19,25 +18,27 @@ import javax.swing.JScrollPane;
 public class MainWindow extends JFrame {
 	
 	private JLabel currentActivityLabel;
-	private JLabel currentDateTimeLabel;
-	private JPanel currentDateTimeJPanel1;
-	private JLabel timeStartedStudyingLabel;
-	private JLabel timeStoppedStudyingLabel;
-	private JLabel totalStudyTimeLabel;
-	private JLabel totalStudyTimeTodayLabel;
-	private JPanel studyTimeJPanel1;
-	private JPanel studyTimeJPanel2;
-	private JPanel studyTimeJPanelEmptySpace;
-	private JPanel currentActivityPanel1;
-	private JPanel currentActivityPanel2;
-	private JPanel currentActivityPanel3;
 	private ButtonGroup currentActivityGroup;
-	private JRadioButton studyRadioButton;
-	private JRadioButton exercicesRadioButton;
-	private JRadioButton projectsRadioButton;
+	private JRadioButton[] studyActivities;
+	private String[] studyActivityNames = {"Study", "Excerice", "Projects"};
+	private JPanel currentActivityLabelPanel;
+	private JPanel currentActivityRadioButtonsPanel;
+	
+	
+	private JLabel[] timeLabels;
+	private String[] timeLabelsNames = {"Current time:", "Time started studying:" , "Time stopped studying:", 
+			"Today study time:", "Total study time total:"};
+	private JPanel currentDateTimeJPanel1;
+	private JPanel timeStudiedJPanel;
+	private JPanel studyTimeJPanel;
+	private JPanel studyTimeJPanelEmptySpace;
+	
+	
+
 	private JComboBox<String> studySubjectsDropDown;
 	private JPanel studySubjectsPanel1;
 	private JScrollPane studySubjectsScrollPane;
+
 	private JLabel studySubjectLabel;
 	private JButton startStudy;
 	private JButton pauseStudy;
@@ -47,86 +48,82 @@ public class MainWindow extends JFrame {
 	private JPanel buttonsPanel1;
 	private JPanel buttonsPanel2;
 			
-	private final JPanel mainCenterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-	private final JPanel bottomPanel = new JPanel(new GridLayout(2, 1));
-	private final BorderLayout mainLayout = new BorderLayout();
-	
+	private final JPanel topPanel = new JPanel(new GridLayout(2, 1, 0, 0));
+	private final JPanel mainCenterPanel = new JPanel(new GridLayout(2, 1, 0, 0));
+	private final JPanel bottomPanel = new JPanel(new GridLayout(2, 1, 0 , 0));
 	
 	public MainWindow() {
-		super();
+		super("Study Time Tracker");
 
 		activitySection();
-		add(currentActivityPanel3, mainLayout.NORTH);
 		timeLabelsSection();
 		studySubjectSection();
-		add(mainCenterPanel, mainLayout.CENTER);
 		buttonSection();
-		add(bottomPanel, mainLayout.SOUTH);
+		
+		add(mainCenterPanel, BorderLayout.CENTER);
+		add(topPanel, BorderLayout.NORTH);
+		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private void activitySection() {
-		
-		// Main JPanel that will hold the activity label and radio buttons
-		currentActivityPanel3 = new JPanel(new GridLayout(2, 1, 0, 0));
-		
+			
 		// Create current activity JPanel that will hold the 
 		// CurrentActivity Label
-		currentActivityPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+		currentActivityLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
 		
 		// Create and add the current activity label and add to its own panel
 		currentActivityLabel = new JLabel("Current Activity");
-		currentActivityPanel1.add(currentActivityLabel);
+		currentActivityLabelPanel.add(currentActivityLabel);
 		
 		// Create the Current Activity Radio Button group and
 		// Add activity radio buttons to their own JPanel
-		currentActivityPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+		currentActivityRadioButtonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
 		
 		currentActivityGroup = new ButtonGroup();
 		
-		studyRadioButton = new JRadioButton("Study", true);
-		currentActivityGroup.add(studyRadioButton);
-		exercicesRadioButton = new JRadioButton("Exercices", false);
-		currentActivityGroup.add(exercicesRadioButton);
-		projectsRadioButton = new JRadioButton("Projects", false);
-		currentActivityGroup.add(projectsRadioButton);
-		// Add the radio buttons to the JPanel
-		currentActivityPanel2.add(studyRadioButton);
-		currentActivityPanel2.add(exercicesRadioButton);
-		currentActivityPanel2.add(projectsRadioButton);
-		
+		studyActivities = new JRadioButton[studyActivityNames.length];
+		for (int i = 0; i < studyActivityNames.length; i++) {
+			studyActivities[i] = new JRadioButton(studyActivityNames[i]); // Create the radio button
+			currentActivityGroup.add(studyActivities[i]);	// Add to button Group
+			currentActivityRadioButtonsPanel.add(studyActivities[i]);		// Add the radio buttons to the JPanel
+		}	
+		studyActivities[0].setSelected(true);
+	
 
 		// Add Activity Label and radio buttons to main Activity JPanel
-		currentActivityPanel3.add(currentActivityPanel1);
-		currentActivityPanel3.add(currentActivityPanel2);
-		
-		// Add Activities JPanel to frame
-//		add(currentActivityPanel3, mainLayout.NORTH);	// Add the activity panel to the north border (top)
+		topPanel.add(currentActivityLabelPanel);
+		topPanel.add(currentActivityRadioButtonsPanel);
+
 	}
 
 	private void timeLabelsSection() {
-		currentDateTimeLabel = new JLabel("Current time:");
+		// JPanel that will only hold the display for the current time
 		currentDateTimeJPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-		currentDateTimeJPanel1.add(currentDateTimeLabel);
+		// JPanel that will hold all the calculations for the time spent studying
+		timeStudiedJPanel = new JPanel(new GridLayout(2, 2, 100, 10));
 		
-		timeStartedStudyingLabel = new JLabel("Time started studying:");
-		timeStoppedStudyingLabel = new JLabel("Time stopped studying:");
-		totalStudyTimeLabel = new JLabel("Total study time:");
-		totalStudyTimeTodayLabel = new JLabel("Total study time total:");
-		studyTimeJPanel1 = new JPanel(new GridLayout(2, 2, 100, 10));
+		// Create all tha labels
+		timeLabels = new JLabel[timeLabelsNames.length];
+		for (int i = 0; i < timeLabelsNames.length; i++) {
+			timeLabels[i] = new JLabel(timeLabelsNames[i]);		
+			if (i == 0) {
+				currentDateTimeJPanel1.add(timeLabels[i]);
+			}
+			else {
+				timeStudiedJPanel.add(timeLabels[i]);
+			}
+		}
 		
-		studyTimeJPanel1.add(timeStartedStudyingLabel);
-		studyTimeJPanel1.add(timeStoppedStudyingLabel);
-		studyTimeJPanel1.add(totalStudyTimeLabel);
-		studyTimeJPanel1.add(totalStudyTimeTodayLabel);
-
-		studyTimeJPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 50));
+		// JPanel that will hold the current time panel and the time spent studying panel
+		studyTimeJPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 50));
 		studyTimeJPanelEmptySpace = new JPanel(new FlowLayout(FlowLayout.CENTER, 20,0));
-		studyTimeJPanel2.add(currentDateTimeJPanel1);
-		studyTimeJPanel2.add(studyTimeJPanelEmptySpace);
-		studyTimeJPanel2.add(studyTimeJPanel1);
+		studyTimeJPanel.add(currentDateTimeJPanel1);
+		studyTimeJPanel.add(studyTimeJPanelEmptySpace);
+		studyTimeJPanel.add(timeStudiedJPanel);
+		
+		// Add this main panel to the border layout center panel
+		mainCenterPanel.add(studyTimeJPanel);
 			
-		mainCenterPanel.add(studyTimeJPanel2);
-				
 	}
 
 	private void studySubjectSection() {
@@ -163,7 +160,7 @@ public class MainWindow extends JFrame {
 		
 		// Create two panel holding the button
 		// Start, pause, stop, display stats will be on one line
-		// githbu upload is on a second line
+		// github upload is on a second line
 		
 		buttonsPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0));
 		buttonsPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
