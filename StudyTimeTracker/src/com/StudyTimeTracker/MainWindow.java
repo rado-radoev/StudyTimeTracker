@@ -27,6 +27,7 @@ public class MainWindow extends JFrame {
 	private JLabel[] timeLabels;
 	private String[] timeLabelsNames = {"Current time:", "Time started studying:" , "Time stopped studying:", 
 			"Today study time:", "Total study time total:"};
+	private JLabel timeLabel;
 	private JPanel currentDateTimeJPanel1;
 	private JPanel timeStudiedJPanel;
 	private JPanel studyTimeJPanel;
@@ -108,6 +109,9 @@ public class MainWindow extends JFrame {
 				timeStudiedJPanel.add(timeLabels[i]);
 			}
 		}
+		
+		timeLabel = new JLabel();
+		currentDateTimeJPanel1.add(timeLabel);
 		
 		// JPanel that will hold the current time panel and the time spent studying panel
 		studyTimeJPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 50));
