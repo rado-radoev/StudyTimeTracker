@@ -3,6 +3,9 @@ package com.StudyTimeTracker;
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Timer;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -15,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ITime {
 	
 	private JLabel currentActivityLabel;
 	private ButtonGroup currentActivityGroup;
@@ -25,7 +28,7 @@ public class MainWindow extends JFrame {
 	private JPanel currentActivityRadioButtonsPanel;
 	
 	private JLabel[] timeLabels;
-	private String[] timeLabelsNames = {"Current time:", "Time started studying:" , "Time stopped studying:", 
+	private String[] timeLabelsNames = {"Current time", "Time started studying:" , "Time stopped studying:", 
 			"Today study time:", "Total study time total:"};
 	private JPanel currentDateTimeJPanel1;
 	private JPanel timeStudiedJPanel;
@@ -46,6 +49,8 @@ public class MainWindow extends JFrame {
 	private final JPanel topPanel = new JPanel(new GridLayout(2, 1, 0, 0));
 	private final JPanel mainCenterPanel = new JPanel(new GridLayout(2, 1, 0, 0));
 	private final JPanel bottomPanel = new JPanel(new GridLayout(2, 1, 0 , 0));
+	
+	private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
 	public MainWindow() {
 		super("Study Time Tracker");
@@ -102,6 +107,7 @@ public class MainWindow extends JFrame {
 		for (int i = 0; i < timeLabelsNames.length; i++) {
 			timeLabels[i] = new JLabel(timeLabelsNames[i]);		
 			if (i == 0) {
+				currentTime();
 				currentDateTimeJPanel1.add(timeLabels[i]);
 			}
 			else {
@@ -166,6 +172,24 @@ public class MainWindow extends JFrame {
 		bottomPanel.add(buttonsPanel1);
 		bottomPanel.add(buttonsPanel2);
 	}
+
+	@Override
+	public void currentTime() {
+		new Thread(() -> displayCurrentTime()).start();;
+		
+	}
+	
+	private void displayCurrentTime() {
+		while (true) {
+			try {
+				timeLabels[0].setText(String.format("%s: %s",timeLabelsNames[0] ,LocalTime.now().format(timeFormatter)));
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
 
 
