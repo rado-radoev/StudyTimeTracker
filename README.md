@@ -14,3 +14,7 @@ Work log:
 Next steps are to put some code behind the interface. 
 
 ![screenshot from 2017-07-26 18-49-08](https://user-images.githubusercontent.com/16504625/28650843-2d8a9178-7233-11e7-99d6-1d59b4ea76c2.png)
+
+- **7/31/2017** - Now the current time label displays the current time, by running the timer in a separate thread. 
+
+- **7/31/2017** - Working on the output files and the formatting. The ideas is to have 3 separate binary files for each category and the time spent on each one. 
