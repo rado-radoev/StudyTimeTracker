@@ -1,4 +1,4 @@
-package com.StudyTimeTracker;
+package com.writeTimeToFile;
 
 import java.time.Duration;
 import java.time.Period;

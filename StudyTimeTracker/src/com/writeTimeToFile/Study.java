@@ -1,11 +1,13 @@
-package com.StudyTimeTracker;
+package com.writeTimeToFile;
 
 import java.lang.SecurityException;
 import java.io.FileNotFoundException;
 import java.time.Instant;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
@@ -28,7 +30,8 @@ public class Study {
 	
 	public void addStartTime() {
 		try {
-			output.format("%s ",DateTimeFormatter.ofPattern("HH:mm:ss").format(time.getTimeStartedStudying()));
+			LocalDateTime lt = LocalDateTime.ofInstant(time.getTimeStartedStudying(), ZoneId.systemDefault());
+			output.format("%d:%d%d ", lt.getHour(), lt.getMinute(), lt.getSecond());
 		} catch (FormatterClosedException fce) {
 			System.err.println("Error printing to file");
 		}
@@ -36,8 +39,8 @@ public class Study {
 	
 	private void addTotalTimes() {
 		try {
-			time.setTimeStoppedStudying(Instant.now());
-			output.format("%s ",DateTimeFormatter.ofPattern("HH:mm:ss").format(time.getTimeStoppedStudying()));
+			LocalDateTime lt = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault());
+			output.format("%d:%d%d ", lt.getHour(), lt.getMinute(), lt.getSecond());
 			
 			output.format("%d %d %d", time.getTotalStudyTimeToday().toDays(),
 					time.getTotalStudyTimeToday().toHours(),
@@ -53,6 +56,7 @@ public class Study {
 	}
 	
 	public void closeFile() {
+		addTotalTimes();
 		if (output != null) {
 			output.close();
 		}
